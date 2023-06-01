@@ -12,10 +12,10 @@ class ViewController: UIViewController {
     var isAmountEntered: Bool { return !expenseTextField.text!.isEmpty }
     
     var selectedButton: UIButton?
+    var completeButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         screenLayout()
         buttonsLayout()
         textFieldLayout()
@@ -36,30 +36,79 @@ class ViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.hidesSearchBarWhenScrolling = false
                 
-        let openStatsButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(openStatsTapped))
+        let openStatsButton = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(openStatsTapped))
+        openStatsButton.tintColor = UIColor.blue
         navigationItem.rightBarButtonItem = openStatsButton
     }
     
     private func buttonsLayout() {
-        let centerPoint = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height - 250)
+        let centerPoint = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height - 350)
         let radius: CGFloat = 100.0
         let buttonSize: CGFloat = 70.0
         let angleIncrement = CGFloat.pi / 3.0
         
-        for i in 1..<7 {
-            let angle = angleIncrement * CGFloat(i)
-            let x = centerPoint.x + radius * cos(angle)
-            let y = centerPoint.y + radius * sin(angle)
-            let button = UIButton(frame: CGRect(x: x - buttonSize/2, y: y - buttonSize/2, width: buttonSize, height: buttonSize))
-            button.backgroundColor = UIColor.blue
-            button.tag = i
-            button.layer.cornerRadius = buttonSize/2
-            button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
-            self.view.addSubview(button)
+        func categoryButtonsLayout() {
+            for i in 1..<7 {
+                var category = categoryNames.Fun
+                switch i {
+                case 1: category = categoryNames.Rent
+                case 2: category = categoryNames.Food
+                case 3: category = categoryNames.Transport
+                case 4: category = categoryNames.Clothes
+                case 5: category = categoryNames.Fun
+                case 6: category = categoryNames.Medicine
+                default: break;
+                }
+                
+                let angle = angleIncrement * CGFloat(i)
+                let x = centerPoint.x + radius * cos(angle)
+                let y = centerPoint.y + radius * sin(angle)
+                let button = UIButton(frame: CGRect(x: x - buttonSize/2, y: y - buttonSize/2, width: buttonSize, height: buttonSize))
+                button.backgroundColor = UIColor.white
+                button.tintColor = UIColor.blue
+                button.layer.borderWidth = 3
+                button.layer.borderColor = UIColor.blue.cgColor
+                button.tag = i
+                button.setImage(categoryImagines(category: category), for: .normal)
+                button.layer.cornerRadius = buttonSize/2
+                button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
+                self.view.addSubview(button)
+            }
         }
+        
+        func completeButtonLayout() {
+            completeButton = UIButton(frame: CGRect(x: self.view.frame.width/2 - buttonSize/2, y: self.view.frame.height - 350 - buttonSize/2, width: buttonSize, height: buttonSize))
+            completeButton?.backgroundColor = UIColor.white
+            completeButton?.layer.borderWidth = 3
+            completeButton?.tintColor = UIColor.systemPink
+            completeButton?.layer.borderColor = UIColor.systemPink.cgColor
+            completeButton?.setImage(categoryImagines(category: categoryNames.Complete), for: .normal)
+            completeButton?.isHidden = true
+            completeButton?.layer.cornerRadius = buttonSize/2
+            completeButton?.addTarget(self, action: #selector(completeButtonTapped(_:)), for: .touchUpInside)
+            self.view.addSubview(completeButton!)
+        }
+        
+        categoryButtonsLayout()
+        completeButtonLayout()
     }
     
-    @objc func buttonTapped(_ sender: UIButton) {
+    @objc func categoryButtonTapped(_ sender: UIButton) {
+        if let selectedButton = self.selectedButton {
+            // если да, то сбрасываем ее состояние и изменяем цвет фона на исходный
+            selectedButton.isSelected = false
+            selectedButton.tintColor = UIColor.blue
+        }
+        
+        
+        completeButton?.isHidden = false
+        // сохраняем ссылку на выбранную кнопку и изменяем ее цвет фона
+        self.selectedButton = sender
+        sender.isSelected = true
+        sender.tintColor = UIColor.systemPink
+    }
+    
+    @objc func completeButtonTapped(_ sender: UIButton) {
         guard let expenseText = expenseTextField.text, !expenseText.isEmpty else {
             // Если текстовое поле пустое, выход из метода
             return
@@ -72,39 +121,28 @@ class ViewController: UIViewController {
             return
         }
         
-        if let selectedButton = self.selectedButton {
-            // если да, то сбрасываем ее состояние и изменяем цвет фона на исходный
-            selectedButton.isSelected = false
-            selectedButton.backgroundColor = UIColor.blue
-        }
-        // сохраняем ссылку на выбранную кнопку и изменяем ее цвет фона
-        self.selectedButton = sender
-        sender.isSelected = true
-        sender.backgroundColor = UIColor.red
-        
-        
-        var category = ""
+        var category = categoryNames.Fun
         switch sender.tag {
-        case 1: category = "Rent"
-        case 2: category = "Food"
-        case 3: category = "Transport"
-        case 4: category = "Clothes"
-        case 5: category = "Fun"
-        case 6: category = "Medicine"
+        case 1: category = categoryNames.Rent
+        case 2: category = categoryNames.Food
+        case 3: category = categoryNames.Transport
+        case 4: category = categoryNames.Clothes
+        case 5: category = categoryNames.Fun
+        case 6: category = categoryNames.Medicine
         default: break;
         }
         
-        // удаление транзакции
-        let transactions = CoreDataHelper.shared.fetchTransactions()
-        for transaction in transactions {
-            CoreDataHelper.shared.deleteTransaction(transaction: transaction)
-        }
+//        // удаление транзакции
+//        let transactions = CoreDataHelper.shared.fetchTransactions()
+//        for transaction in transactions {
+//            CoreDataHelper.shared.deleteTransaction(transaction: transaction)
+//        }
 //        if let transaction = transactions.first {
 //            CoreDataHelper.shared.deleteTransaction(transaction: transaction)
 //        }
         
         // добавление новой транзакции
-        CoreDataHelper.shared.saveTransaction(category: category, amount: expenseAmount)
+        CoreDataHelper.shared.saveTransaction(category: category.description, amount: expenseAmount)
         
         // чтение транзакций
         let newTransactions = CoreDataHelper.shared.fetchTransactions()
@@ -122,8 +160,8 @@ class ViewController: UIViewController {
         expenseTextField.textColor = .black
         
         expenseTextField.layer.cornerRadius = 10
-        expenseTextField.layer.borderWidth = 2
-        expenseTextField.layer.borderColor = UIColor.systemGray4.cgColor
+        expenseTextField.layer.borderWidth = 1
+        expenseTextField.layer.borderColor = UIColor.blue.cgColor
         
         expenseTextField.textAlignment = .center
         expenseTextField.font = UIFont.preferredFont(forTextStyle: .title2)

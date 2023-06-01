@@ -14,6 +14,7 @@
 		A140099629CBB52C00D6C3A3 /* Expenses.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A140099429CBB52C00D6C3A3 /* Expenses.xcdatamodeld */; };
 		A140099829CBB52F00D6C3A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A140099729CBB52F00D6C3A3 /* Assets.xcassets */; };
 		A140099B29CBB52F00D6C3A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A140099929CBB52F00D6C3A3 /* LaunchScreen.storyboard */; };
+		A15B2F902A28E85A00C72C84 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15B2F8F2A28E85A00C72C84 /* File.swift */; };
 		A199F15229EF2B6800E64912 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A199F15129EF2B6800E64912 /* CoreDataHelper.swift */; };
 		A199F15429EF2FE200E64912 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A199F15329EF2FE200E64912 /* Transaction.swift */; };
 /* End PBXBuildFile section */
@@ -28,6 +29,7 @@
 		A140099729CBB52F00D6C3A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A140099A29CBB52F00D6C3A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A140099C29CBB52F00D6C3A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A15B2F8F2A28E85A00C72C84 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		A199F15129EF2B6800E64912 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		A199F15329EF2FE200E64912 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +74,7 @@
 				A140099929CBB52F00D6C3A3 /* LaunchScreen.storyboard */,
 				A140099C29CBB52F00D6C3A3 /* Info.plist */,
 				A140099429CBB52C00D6C3A3 /* Expenses.xcdatamodeld */,
+				A15B2F8F2A28E85A00C72C84 /* File.swift */,
 			);
 			path = Expenses;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 			files = (
 				A199F15229EF2B6800E64912 /* CoreDataHelper.swift in Sources */,
 				A199F15429EF2FE200E64912 /* Transaction.swift in Sources */,
+				A15B2F902A28E85A00C72C84 /* File.swift in Sources */,
 				A140099629CBB52C00D6C3A3 /* Expenses.xcdatamodeld in Sources */,
 				A140099029CBB52C00D6C3A3 /* ViewController.swift in Sources */,
 				A140098C29CBB52C00D6C3A3 /* AppDelegate.swift in Sources */,
