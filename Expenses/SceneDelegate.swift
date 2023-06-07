@@ -19,12 +19,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.rootViewController = UINavigationController(rootViewController: ViewController())
         window?.makeKeyAndVisible()
-        
+        window?.tintColor = .blue
         configureNavigationBar()
     }
     
     func configureNavigationBar() {
-        UINavigationBar.appearance().tintColor = .systemGreen
+        UINavigationBar.appearance().tintColor = .blue
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

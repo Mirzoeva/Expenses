@@ -7,6 +7,13 @@
 
 import UIKit
 
+public class Colors {
+    static let shared = Colors()
+    public let categoryButtonColor = UIColor.blue
+    public let completeButtonColor = UIColor.systemPink
+    public let backgroundColor = UIColor.white
+}
+
 
 func categoryImagines(category: categoryNames) -> UIImage? {
     switch category {
@@ -20,19 +27,10 @@ func categoryImagines(category: categoryNames) -> UIImage? {
     }
 }
 
-enum categoryNames {
+enum categoryNames: String {
     case Rent, Food, Transport, Clothes, Fun, Medicine, Complete
     
     var description : String {
-        switch self {
-        // Use Internationalization, as appropriate.
-        case .Rent: return "Rent"
-        case .Food: return "Food"
-        case .Transport: return "Transport"
-        case .Clothes: return "Clothes"
-        case .Fun: return "Fun"
-        case .Medicine: return "Medicine"
-        case .Complete: return "Complete"
-        }
+        return self.rawValue
       }
 }
