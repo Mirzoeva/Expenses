@@ -32,7 +32,7 @@ class AmountTextField: UITextField {
         font               = UIFont.preferredFont(forTextStyle: .title2)
         adjustsFontSizeToFitWidth = true
         minimumFontSize    = 12
-        placeholder        = "Enter a amount"
+        placeholder        = L.TextFieldPlaceholders.amount
         keyboardType       = .decimalPad
     }
     

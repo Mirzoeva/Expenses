@@ -18,7 +18,7 @@ protocol CoreData {
 
 final class CoreDataHelper: CoreData {
     private lazy var container: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Expenses")
+        let container = NSPersistentContainer(name: L.CoreData.Expenses)
         container.loadPersistentStores { storeDescription, error in
             if let error = error {
                 fatalError(error.localizedDescription)
@@ -61,8 +61,8 @@ final class CoreDataHelper: CoreData {
     }
     
     func fetchTransactions() -> [Transaction] {
-        let fetchRequest = NSFetchRequest<Transaction>(entityName: "Transaction")
-        let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
+        let fetchRequest = NSFetchRequest<Transaction>(entityName: L.CoreData.Transaction)
+        let sortDescriptor = NSSortDescriptor(key: L.CoreData.date, ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         do {

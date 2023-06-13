@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainVC: UIViewController {
     let expenseTextField = AmountTextField()
     var isAmountEntered: Bool { return !expenseTextField.text!.isEmpty }
     
@@ -26,8 +26,7 @@ class ViewController: UIViewController {
     }
     
     @objc func pushStatsVC() {
-        let statsVC = UIViewController()
-        statsVC.view.backgroundColor = Colors.shared.backgroundColor
+        let statsVC = StatVC()
         navigationController?.pushViewController(statsVC, animated: true)
     }
     
@@ -90,14 +89,13 @@ class ViewController: UIViewController {
     @objc func completeButtonTapped(_ sender: CategoryButton) {
         guard let expenseText = expenseTextField.text, !expenseText.isEmpty,
               let selectedButton = selectedButton else {
-            // Если текстовое поле пустое, выход из метода
+            Alert.show(L.Alert.emptyAmountField)
+//            alertView(L.Alert.emptyAmountField)
             return
         }
         
-        // Преобразование текста введенной суммы в Double
         guard let expenseAmount = Double(expenseText) else {
-            // Если текст нельзя преобразовать в число, выводим сообщение об ошибке
-            print("Invalid expense amount")
+            alertView(L.Alert.wrongAmountData)
             return
         }
         
@@ -139,9 +137,21 @@ class ViewController: UIViewController {
             expenseTextField.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
+    
+    private func alertView(_ text: String) {
+        let alert = UIAlertController(
+            title: text,
+            message: nil,
+            preferredStyle: .alert
+        )
+        let ok = UIAlertAction(title: "Ok", style: .default)
+        
+        alert.addAction(ok)
+        present(alert, animated: true)
+    }
 }
 
-extension ViewController: UITextFieldDelegate {
+extension MainVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 //        pushFollowerListVC()
         return true
